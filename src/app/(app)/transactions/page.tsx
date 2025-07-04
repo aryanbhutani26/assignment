@@ -9,6 +9,7 @@ async function TransactionsData() {
   return <TransactionsClient initialTransactions={transactions} />;
 }
 
+
 function TransactionsLoading() {
   return (
     <div>
