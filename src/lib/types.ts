@@ -9,3 +9,8 @@ export interface Transaction {
   amount: number; // in cents
   category: Category;
 }
+
+export interface Budget {
+    category: Category;
+    amount: number; // in cents
+}

@@ -7,9 +7,11 @@ import { CategoryPieChart } from "@/components/dashboard/category-pie-chart";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { InsightsCard } from "@/components/dashboard/insights-card";
 import api from "@/lib/data";
+import { BudgetComparisonChart } from "@/components/dashboard/budget-comparison-chart";
 
 export default async function DashboardPage() {
   const transactions = await api.getTransactions();
+  const budgets = await api.getBudgets();
   const totalExpenses = transactions.reduce((sum, t) => sum + t.amount, 0) / 100;
   
   const mostSpentCategory = Object.entries(
@@ -51,7 +53,8 @@ export default async function DashboardPage() {
         <MonthlyExpensesChart data={transactions} />
         <CategoryPieChart data={transactions} />
       </div>
-       <div className="grid grid-cols-1 gap-4 p-4 md:p-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 p-4 md:p-6 lg:grid-cols-4">
+        <BudgetComparisonChart transactions={transactions} budgets={budgets} />
         <RecentTransactions data={transactions} />
       </div>
     </>

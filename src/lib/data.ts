@@ -1,4 +1,4 @@
-import { type Transaction, categories } from "@/lib/types";
+import { type Transaction, categories, type Budget } from "@/lib/types";
 
 const mockTransactions: Transaction[] = [
   { id: "1", date: "2024-07-15T12:00:00Z", description: "Trader Joe's", amount: 7523, category: "Groceries" },
@@ -23,12 +23,27 @@ const mockTransactions: Transaction[] = [
   { id: "20", date: "2024-02-11T12:00:00Z", description: "Amazon Order", amount: 6780, category: "Shopping" },
 ];
 
+const mockBudgets: Budget[] = [
+    { category: "Groceries", amount: 25000 },
+    { category: "Rent", amount: 250000 },
+    { category: "Utilities", amount: 15000 },
+    { category: "Entertainment", amount: 20000 },
+    { category: "Transport", amount: 15000 },
+    { category: "Health", amount: 10000 },
+    { category: "Shopping", amount: 20000 },
+    { category: "Other", amount: 5000 },
+];
+
 // Simulate API latency
 const api = {
   getTransactions: async (): Promise<Transaction[]> => {
     await new Promise(resolve => setTimeout(resolve, 500));
     return mockTransactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   },
+  getBudgets: async (): Promise<Budget[]> => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return mockBudgets;
+  }
 };
 
 export default api;
