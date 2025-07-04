@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from "lucide-react"
+import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -55,7 +56,7 @@ export const getColumns = (
         </Button>
       )
     },
-    cell: ({ row }) => new Date(row.getValue("date")).toLocaleDateString(),
+    cell: ({ row }) => format(new Date(row.getValue("date")), "P"),
   },
   {
     accessorKey: "description",
