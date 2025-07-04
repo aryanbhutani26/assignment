@@ -23,7 +23,7 @@ export function InsightsCard() {
           </li>
           <li className="flex items-start">
             <span className="mr-2 mt-1">💡</span>
-            <span>You've spent <span className="font-semibold text-foreground">$450</span> on <span className="font-semibold text-foreground">Entertainment</span>. Consider setting a budget.</span>
+            <span>You've spent <span className="font-semibold text-foreground">₹36,000</span> on <span className="font-semibold text-foreground">Entertainment</span>. Consider setting a budget.</span>
           </li>
           <li className="flex items-start">
             <span className="mr-2 mt-1">💡</span>

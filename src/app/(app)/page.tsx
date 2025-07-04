@@ -1,4 +1,4 @@
-import { DollarSign, BarChart, TrendingUp } from "lucide-react";
+import { IndianRupee, BarChart, TrendingUp } from "lucide-react";
 
 import { SummaryCard } from "@/components/dashboard/summary-card";
 import { PageHeader } from "@/components/page-header";
@@ -29,8 +29,8 @@ export default async function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 p-4 md:p-6">
         <SummaryCard 
           title="Total Expenses"
-          value={`$${totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-          icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
+          value={`₹${totalExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          icon={<IndianRupee className="h-4 w-4 text-muted-foreground" />}
           description="Total expenses across all transactions"
         />
         <SummaryCard 

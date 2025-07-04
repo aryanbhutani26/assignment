@@ -62,7 +62,7 @@ export function RecentTransactions({ data }: RecentTransactionsProps) {
                 <p className="text-sm text-muted-foreground">{transaction.category}</p>
               </div>
               <div className="ml-auto font-medium">
-                -${(transaction.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                -₹{(transaction.amount / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             </div>
           ))}
