@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
@@ -37,11 +37,17 @@ export function MonthlyExpensesChart({ data }: MonthlyExpensesChartProps) {
     <Card className="col-span-1 lg:col-span-2">
       <CardHeader>
         <CardTitle>Monthly Expenses</CardTitle>
-        <CardDescription>A bar chart of your expenses over the last 6 months.</CardDescription>
+        <CardDescription>A line chart of your expenses over the last 6 months.</CardDescription>
       </CardHeader>
       <CardContent className="pl-2">
         <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={chartData}>
+          <AreaChart data={chartData}>
+             <defs>
+              <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
             <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
@@ -53,8 +59,8 @@ export function MonthlyExpensesChart({ data }: MonthlyExpensesChartProps) {
               }}
               cursor={{ fill: 'hsl(var(--muted))' }}
             />
-            <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-          </BarChart>
+            <Area type="monotone" dataKey="total" stroke="hsl(var(--primary))" strokeWidth={2} fillOpacity={1} fill="url(#colorTotal)" />
+          </AreaChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>
