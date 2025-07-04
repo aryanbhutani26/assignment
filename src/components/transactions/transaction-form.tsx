@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
+import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -45,7 +46,7 @@ const transactionSchema = z.object({
   description: z.string().min(1, { message: "Description is required." }),
   amount: z.coerce.number().positive({ message: "Amount must be a positive number." }),
   category: z.enum(categories),
-  date: z.date(),
+  date: z.date({ required_error: "A date is required." }),
 });
 
 type TransactionFormValues = z.infer<typeof transactionSchema>;
@@ -60,23 +61,48 @@ interface TransactionFormProps {
 export function TransactionForm({ open, onOpenChange, onSubmit, defaultValue }: TransactionFormProps) {
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      description: defaultValue?.description || "",
-      amount: defaultValue ? defaultValue.amount / 100 : undefined,
-      category: defaultValue?.category,
-      date: defaultValue ? new Date(defaultValue.date) : new Date(),
-    },
+    defaultValues: defaultValue
+      ? {
+          description: defaultValue.description,
+          amount: defaultValue.amount / 100,
+          category: defaultValue.category,
+          date: new Date(defaultValue.date),
+        }
+      : {
+          description: "",
+          amount: undefined,
+          category: undefined,
+          date: undefined,
+        },
   });
+
+  React.useEffect(() => {
+    if (open) {
+      form.reset(
+        defaultValue
+          ? {
+              ...defaultValue,
+              amount: defaultValue.amount / 100,
+              date: new Date(defaultValue.date),
+            }
+          : {
+              description: "",
+              amount: undefined,
+              category: undefined,
+              date: new Date(),
+            }
+      );
+    }
+  }, [open, defaultValue, form]);
 
   const handleSubmit = (values: TransactionFormValues) => {
     const transactionData: Transaction = {
-      id: defaultValue?.id || new Date().toISOString(),
+      id: defaultValue?.id || crypto.randomUUID(),
       ...values,
       amount: Math.round(values.amount * 100), // convert to cents
       date: values.date.toISOString(),
     };
     onSubmit(transactionData);
-    form.reset();
     onOpenChange(false);
   };
   
